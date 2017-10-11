@@ -1,3 +1,2 @@
-import requests
-import urllib
-print('OK')
+"""Test script"""
+print('Hello')
