@@ -1,2 +1,3 @@
-"""Test script"""
-print('Hello')
+import requests
+import urllib
+print('OK')

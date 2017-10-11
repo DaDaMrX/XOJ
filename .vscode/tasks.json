@@ -17,7 +17,7 @@
                 "taskName": "compile",
                 "suppressTaskName": true,
                 "isBuildCommand": true,
-                "args": ["python ${fileBasename} <in.txt"]
+                "args": ["python ${relativeFile}"]
             }
         ]
     }
