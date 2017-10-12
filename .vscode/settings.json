@@ -7,7 +7,7 @@
  * Licence:       Copyright (c) 2017 DaDaMr_X
  ******************************************************************************/
 {
-    "workbench.colorTheme": "Default Light+",
+    // "workbench.colorTheme": "Default Light+",
     "editor.fontSize": 15,
     "editor.snippetSuggestions": "top",
     "terminal.integrated.shell.windows": "C:\\Windows\\Sysnative\\cmd.exe",
@@ -21,5 +21,6 @@
         "complex": "cpp",
         "string": "cpp",
         "stdlib.h": "c"
-    }
+    },
+    "python.linting.pylintEnabled": false
 }
