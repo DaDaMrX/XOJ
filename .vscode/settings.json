@@ -7,7 +7,11 @@
  * Licence:       Copyright (c) 2017 DaDaMr_X
  ******************************************************************************/
 {
+<<<<<<< HEAD
     // "workbench.colorTheme": "Default Light+",
+=======
+   // "workbench.colorTheme": "Default Light+",
+>>>>>>> 6941ca7514033c291e387eeb9f31463b64e3d830
     "editor.fontSize": 15,
     "editor.snippetSuggestions": "top",
     "terminal.integrated.shell.windows": "C:\\Windows\\Sysnative\\cmd.exe",
