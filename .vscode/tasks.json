@@ -1,14 +1,5 @@
- {
+{
     "version": "0.1.0",
-    "command": "bash",
-    "isShellCommand": true,
-    "args": ["-c"],
-    "tasks": [
-        {
-            "taskName": "compile",
-            "suppressTaskName": true,
-            "isBuildCommand": true,
-            "args": ["python ${relativeFile} <in.txt"]
-        }
-    ]
+    "command": "python",
+    "args": ["${relativeFile}"]
 }
