@@ -1,5 +1,5 @@
 <template>
-  <div id="index">
+  <div id="app">
     <img src="./assets/logo.png">
     <h1>Welcome to XOJ</h1>
     <h2>简介</h2>
@@ -16,7 +16,7 @@
 
 <style>
 body {background-image: url(./assets/round.png);}
-#index {
+#app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
