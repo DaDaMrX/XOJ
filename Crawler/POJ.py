@@ -1,26 +1,3 @@
-'''
-submit_data = dict(
-        problem_id = pid,
-        language = LANGUAGE[lang.upper()],
-        source = base64.b64encode(src.encode('ascii')),
-        submit = 'Submit',
-        reset='Reset',
-        encoded ='1')
-postdata2 = urllib.parse.urlencode(submit_data).encode()
-
-
-req2 = urllib.request.Request(URL_SUBMIT,data = postdata2, headers = head)
-req2 = urllib.request.Request(URL_SUBMIT, postdata2)
-
-
-# res = opener.open(req2)
-res = opener.open(URL_SUBMIT,postdata2)
-res = res.read().decode()
-
-print(res)
-'''
-
-
 import urllib.request, urllib.parse
 import http.cookiejar
 import base64
@@ -97,16 +74,12 @@ class POJ:
 		url = POJ.status_url + '?' + urllib.parse.urlencode(data)
 		html = self.opener.open(url).read().decode()
 
-		soup = BeautifulSoup(html)
-		table = soup.findAll('table', {'class':'a'})
-		print('table')
-		print(table)
-		pattern = re.compile('Compile Error')
-		result = pattern.findall(str(table))
-		print('result')
+		soup = BeautifulSoup(html, 'lxml')
+		table = soup.find('table', class_ = 'a')
+		tr = table.find_all('tr')[1]
+		td = tr.find_all('td')[3]
+		result = td.find(text = re.compile('[A.c, C.m]'))
 		print(result)
-
-
 
 if __name__ == '__main__':
 	poj = POJ()
@@ -117,16 +90,7 @@ if __name__ == '__main__':
 
 	problemid = '1000'
 	language = 'g++'
-	code = '''
-	#include <stdio.h>
-	int main()
-	{
-		int a, b;
-		scanf("%d%d", &a, &b);
-		printf("%d\n", a + b);
-		return 0;
-	}
-	'''
+	code = '''#include <stdio.h>\nint main()\n{\nprintf("1\n");\n}'''
 	if (poj.submit(problemid, language, code)):
 		print('Submit Successfully!')
 	else:
