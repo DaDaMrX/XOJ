@@ -4,13 +4,14 @@ import base64
 from bs4 import BeautifulSoup
 import re
 
-class OnlineJudge:
+class HDU:
 
 	def __init__(self):
 		self.index_url = 'http://acm.split.hdu.edu.cn/'
 		self.login_url = self.index_url + 'userloginex.php?action=login'
 		self.submit_url = self.index_url + 'submit.php?action=submit'
 		self.status_url = self.index_url + 'status.php'
+		self.problem_url = self.index_url + 'showproblem.php'
 
 		self.encoding = 'GB2312'
 		self.language = {
@@ -23,10 +24,6 @@ class OnlineJudge:
 			'C#':     6 
 		}
 
-		self.login_username_key = 'username'
-		self.login_password_key = 'userpass'
-		self.status_table_class = 'table_text'
-
 	def login(self, username, password):
 		self.username = username
 		self.password = password
@@ -36,8 +33,8 @@ class OnlineJudge:
 		self.opener = urllib.request.build_opener(handler)
 
 		data = {
-			self.login_username_key: username,
-			self.login_password_key: password
+			'username': username,
+			'userpass': password
 		}
 		data = urllib.parse.urlencode(data).encode()
 		request = urllib.request.Request(self.login_url, data)
@@ -47,6 +44,18 @@ class OnlineJudge:
 			return True
 		else:
 			return False
+
+	def problem(problemid):
+		data = {
+			'pid': problemid,
+		}
+		url = self.problem_url + '?' + urllib.parse.urlencode(data)
+		html = self.opener.open(url).read().decode(self.encoding)
+		soup = BeautifulSoup(html, 'lxml')
+
+		problem = {}
+
+		pass
 
 	def submit(self, problemid, language, code):
 		data = {
@@ -58,14 +67,6 @@ class OnlineJudge:
 		request = urllib.request.Request(self.submit_url, data)
 		html = self.opener.open(request).read().decode(self.encoding)
 
-		if (html.find('Status') != -1):
-			return True
-		else:
-			return False
-
-	def status(self, problemid, username = None):
-		if (username == None):
-			username = self.username
 		data = {
 			'pid': problemid,
 			'user': username
@@ -74,7 +75,20 @@ class OnlineJudge:
 		html = self.opener.open(url).read().decode(self.encoding)
 
 		soup = BeautifulSoup(html, 'lxml')
-		table = soup.find('table', class_ = self.status_table_class)
+		table = soup.find('table', class_ = 'table_text')
+		tr = table.find_all('tr')[1]
+		td = tr.find_all('td')[0]
+		return td.string
+
+	def status(self, runid):
+		data = {
+			'first': runid,
+		}
+		url = self.status_url + '?' + urllib.parse.urlencode(data)
+		html = self.opener.open(url).read().decode(self.encoding)
+
+		soup = BeautifulSoup(html, 'lxml')
+		table = soup.find('table', class_ = 'table_text')
 		tr = table.find_all('tr')[1]
 		td = tr.find_all('td')[2]
 		result = td.find('font').string
@@ -84,7 +98,7 @@ if __name__ == '__main__':
 	username = 'DaDaMr_X'
 	password = '199707161239x'
 
-	hdu = OnlineJudge()
+	hdu = HDU()
 	if (hdu.login(username, password)):
 		print('Login Successfully!')
 	else:
@@ -103,10 +117,8 @@ if __name__ == '__main__':
 	}
 	'''
 
-	if (hdu.submit(problemid, language, code)):
-		print('Submit Successfully!')
-	else:
-		print('Submit Failid!')
+	runid = hdu.submit(problemid, language, code)
+	print(runid)
 
-	result = hdu.status(problemid)
+	result = hdu.status(runid)
 	print(result)
