@@ -1,13 +1,12 @@
 import urllib.request, urllib.parse
 import http.cookiejar
-import base64
 from bs4 import BeautifulSoup
 import re
 
 class HDU:
 
 	def __init__(self):
-		self.index_url = 'http://acm.split.hdu.edu.cn/'
+		self.index_url = 'http://acm.hdu.edu.cn/'
 		self.login_url = self.index_url + 'userloginex.php?action=login'
 		self.submit_url = self.index_url + 'submit.php?action=submit'
 		self.status_url = self.index_url + 'status.php'
@@ -95,30 +94,33 @@ class HDU:
 		return result;
 
 if __name__ == '__main__':
-	username = 'DaDaMr_X'
-	password = '199707161239x'
+	# username = 'DaDaMr_X'
+	# password = '199707161239x'
 
-	hdu = HDU()
-	if (hdu.login(username, password)):
-		print('Login Successfully!')
-	else:
-		print('Username or Passowrd is Wrong!')
+	# hdu = HDU()
+	# if (hdu.login(username, password)):
+	# 	print('Login Successfully!')
+	# else:
+	# 	print('Username or Passowrd is Wrong!')
 
-	problemid = '1000'
-	language = 'g++'
-	code = '''
-	#include <cstdio>
-	int main()
-	{
-		int a, b;
-		while (~scanf("%d%d", &a, &b))
-			printf("%d\\n", a + b);
-		return 0;
-	}
-	'''
+	# problemid = '1000'
+	# language = 'g++'
+	# code = '''
+	# #include <cstdio>
+	# int main()
+	# {
+	# 	int a, b;
+	# 	while (~scanf("%d%d", &a, &b))
+	# 		printf("%d\\n", a + b);
+	# 	return 0;
+	# }
+	# '''
 
-	runid = hdu.submit(problemid, language, code)
-	print(runid)
+	# runid = hdu.submit(problemid, language, code)
+	# print(runid)
 
-	result = hdu.status(runid)
-	print(result)
+	# result = hdu.status(runid)
+	# print(result)
+
+	with urllib.request.urlopen('http://www.python.org/') as f:
+		print(f.read(100).decode('utf-8'))
