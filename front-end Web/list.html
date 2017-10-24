@@ -26,14 +26,14 @@
       }
       xmlhttp.open("GET", "./list.json", true);
       xmlhttp.send();    
-}
+    }
     window.onload = init();
   </script>
 </head>
 
 <body>
-  <div id="orderTest">
-    <el-table :data="tableData" border style="width: 100%">
+  <div id="listTable">
+    <el-table :data="list" border style="width: 100%">
       <el-table-column prop="OJ" label="OJ" sortable width="180">
       </el-table-column>
       <el-table-column prop="ID" label="ID" width="180">
@@ -57,36 +57,9 @@
 <script type="text/javascript">
 
           var order = new Vue({
-            el: '#orderTest',
+            el: '#listTable',
             data() {
-              return {
-                tableData: [{
-                  OJ: obj.list[0].OJ,
-                  ID: obj.list[0].ID,
-                  Title: obj.list[0].Title,
-                  tag: 'Easy'
-                }, {
-                  OJ: obj.list[0].OJ,
-                  ID: obj.list[0].ID,
-                  Title: obj.list[0].Title,
-                  tag: 'Easy'
-                }, {
-                  OJ: obj.list[0].OJ,
-                  ID: obj.list[0].ID,
-                  Title: obj.list[0].Title,
-                  tag: 'Easy'
-                }, {
-                  OJ: obj.list[0].OJ,
-                  ID: obj.list[0].ID,
-                  Title: obj.list[0].Title,
-                  tag: 'Easy'
-                }, {
-                  OJ: obj.list[0].OJ,
-                  ID: obj.list[0].ID,
-                  Title: obj.list[0].Title,
-                  tag: 'Middle'
-                }]
-              }
+              return obj;
             },
             methods: {
               formatter(row, column) {
@@ -100,5 +73,6 @@
 </script>
 <style>
   body {background-image: url(./src/assets/round.png);}
+  body { padding-top: 10%;padding-left: 10%;padding-right: 10%;background-image: url(./src/assets/round.png); } 
 </style>
 </html>

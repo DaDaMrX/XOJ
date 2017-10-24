@@ -1,43 +1,36 @@
 {
-    "test":"iamtest",
     "list":[
         {
             "OJ": "POJ",
             "ID": "1001",
-            "Title": "A + B"
-        },
-        {
-            "OJ": "POJ",
-            "ID": "1001",
-            "Title": "A + B"
+            "Title": "A + B",
+            "tag":"easy"
         },{
             "OJ": "POJ",
             "ID": "1001",
-            "Title": "A + B"
+            "Title": "A + B",
+            "tag":"easy"
+        },{
+            "OJ": "POJ",
+            "ID": "1045",
+            "Title": "A + B",
+            "tag":"easy"
         },{
             "OJ": "POJ",
             "ID": "1001",
-            "Title": "A + B"
+            "Title": "A + B",
+            "tag":"easy"
         },{
             "OJ": "POJ",
             "ID": "1001",
-            "Title": "A + B"
+            "Title": "A + B",
+            "tag":"easy"
         },{
             "OJ": "POJ",
-            "ID": "1001",
-            "Title": "A + B"
-        },{
-            "OJ": "POJ",
-            "ID": "1001",
-            "Title": "A + B"
-        },{
-            "OJ": "POJ",
-            "ID": "1001",
-            "Title": "A + B"
-        },{
-            "OJ": "POJ",
-            "ID": "1001",
-            "Title": "A + B"
+            "ID": "1042",
+            "Title": "A + B",
+            "tag":"easy"
         }
+        
     ]
 }
