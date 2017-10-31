@@ -1,39 +1,55 @@
 <html>
+<script>
+  var obj;
+  function init() {
+    //console.log("a");
+    var xmlhttp;
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        //document.getElementById("test").innerHTML=responseText;
+        obj = JSON.parse(xmlhttp.responseText);
+        //console.log(obj.list[1].OJ);
+      }
+    }
+    xmlhttp.open("GET", "./listdata.json", true);
+    xmlhttp.send();
+  }
+  window.onload = init();
+</script>
 
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" ID="viewport" />
+  <link rel="icon" href="logo.ico" type="logo-icon" />
   <!-- 引入element样式 -->
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
   <title>題目列表-XOJ</title>
-  <script>
-    var obj;
-    function init() {
-      //console.log("a");
-      var xmlhttp;
-      if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-      }
-      else {// code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      }
-      xmlhttp.onreadystatechange = function () {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-          //document.getElementById("test").innerHTML=responseText;
-          obj = JSON.parse(xmlhttp.responseText);
-          //console.log(obj.list[1].OJ);
-        }
-      }
-      xmlhttp.open("GET", "./list.json", true);
-      xmlhttp.send();
-    }
-    window.onload = init();
-  </script>
 </head>
 
 <body>
   <div id="listTable">
+    <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64"
+      text-color="#fff" active-text-color="#ffd04b">
+      <el-menu-item index="3">
+        <a href="./lisit.html" target="_blank">HOME</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="./submit.html" target="_blank">SUBMIT</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="./problem.html" target="_blank">PROBLEM</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="./status.html" target="_blank">STATUS</a>
+      </el-menu-item>
+    </el-menu>
     <el-table :data="list" border style="width: 100%" @cell-click="click">
       <el-table-column prop="OJ" label="OJ" sortable width="180">
       </el-table-column>
@@ -41,10 +57,10 @@
       </el-table-column>
       <el-table-column prop="Title" label="Title" :formatter="formatter">
       </el-table-column>
-      <el-table-column prop="tag" label="难度" width="100" :filters="[{ text: 'Easy', value: 'Easy' }, { text: 'Middle', value: 'Middle' }]"
+      <el-table-column prop="tag" label="难度" width="100" :filters="[{ text: 'Easy', value: 'Easy' }, { text: 'Middle', value: 'Middle' },{text:'Hard',value:'Hard'}]"
         :filter-method="filterTag" filter-placement="bottom-end">
         <template scope="scope">
-          <el-tag :type="scope.row.tag === 'Easy' ? 'primary' : 'success'" close-transition>{{scope.row.tag}}</el-tag>
+          <el-tag :type="scope.row.tag === 'Hard' ? 'danger' : 'primary'" close-transition>{{scope.row.tag}}</el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -58,6 +74,11 @@
 <script type="text/javascript">
     var order = new Vue({
       el: '#listTable',
+      data: function () {
+        return {
+          activeIndex2: '1'
+        }
+      },
       data() {
         return obj;
       },
@@ -74,8 +95,22 @@
           var id = row.ID;
           var title = row.title;
           var oj = row.OJ;
-          if (txt === row.oj) {
+          if (txt === oj) {
             //如果点击了OJ列，跳转至对应的OJ首页
+            var oj_list = {
+              "POJ": "http://poj.org/",
+              "HDU": "http://acm.hdu.edu.cn/"
+            }
+            switch (oj) {
+              case "POJ": {
+                window.location.href = oj_list.POJ;
+                break;
+              }
+              case "HDU": {
+                window.location.href = oj_list.HDU;
+                break;
+              }
+            }
 
           } else {
             //如果点击了Title或者ID列，跳转进入problem.html
@@ -92,35 +127,17 @@
                 //document.getElementById("test").innerHTML=responseText;
                 //obj = JSON.parse(xmlhttp.responseText);
                 //console.log(obj.list[1].OJ);
-                //window.location.href = '你的跳转的目标地址';
-                console.log(oj + id);
+                window.location.href = './problem.html';
+                console.log(oj + " " + id + " " + row.Title);
               }
             }
             xmlhttp.open("GET", "./problem.html?oj&id", true);
             xmlhttp.send();
           }
-          console.log(txt);
-          console.log(row.ID);
-          console.log(column.label);
-        },
-        turn(oj, id) {
-          var xmlhttp;
-          if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-          }
-          else {// code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-          }
-          xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-              //document.getElementById("test").innerHTML=responseText;
-              //obj = JSON.parse(xmlhttp.responseText);
-              //console.log(obj.list[1].OJ);
-              console.log(oj + id);
-            }
-          }
-          xmlhttp.open("GET", "./problem.html?oj&id", true);
-          xmlhttp.send();
+          console.log(oj + " " + id + " " + row.Title);
+          //console.log(txt);
+          //console.log(row.ID);
+          //console.log(column.label);
         }
       }
     });
@@ -130,7 +147,7 @@
     padding-top: 30px;
     padding-left: 10%;
     padding-right: 10%;
-    background-image: url(../../assets/round.png);
+    background-image: url(./round.png);
   }
 </style>
 

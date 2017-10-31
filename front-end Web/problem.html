@@ -1,48 +1,128 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
+<script type="text/javascript">
+  var obj = {};
+  function init() {
+    //console.log("a");
+    var xmlhttp;
+    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    }
+    else {// code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        //document.getElementById("test").innerHTML=responseText;
+        obj = JSON.parse(xmlhttp.responseText);
+        console.log(obj.OJ);
+      }
+    }
+    xmlhttp.open("GET", "./problem.json", true);
+    xmlhttp.send();
+  }
+  window.onload = init();
+  //console.log(obj.Title);
+  //console.log(obj.OJ + "123");
+</script>
+
 <head>
   <meta charset="utf-8">
-  <title>A+B Problem | XOJ</title>
-  <style> body { padding-top: 30px;padding-left: 60px;background-image: url(./src/assets/round.png); } </style>
-  <style> p { padding-left: 20px; } </style>
-  </head>
-<body onload="prettyPrint()">
-<div class="page-header">
-  <h1>1000. A+B Problem</h1>
-</div>
-<div class="row">
-  <article class="span9"><h2>Description</h2>
+  <div id="title">
+    <title>{{obj.Title}} | XOJ</title>
+  </div>
+  <link rel="icon" href="logo.ico" type="logo-icon" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 先引入 Vue -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
-<p>作为所有 Online Judge 的传统题目，你只需读两个整数，输出即可，保证输入的数绝对值不超过1000。</p>
+</head>
 
-<h2>Input Format</h2>
+<body>
+  <div id="app">
+    <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff"
+      active-text-color="#ffd04b">
+      <el-menu-item index="3">
+        <a href="./lisit.html" target="_blank">HOME</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="./submit.html" target="_blank">SUBMIT</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="./problem.html" target="_blank">PROBLEM</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="./status.html" target="_blank">STATUS</a>
+      </el-menu-item>
+    </el-menu>
+  </div>
+  <div id="problem">
+   <h1>{{obj.OJ+" "+obj.ID+"."+obj.Title}}</h1>
 
-<p>一行,两个空格隔开的整数A,B。</p>
+    <h2>Description</h2>
+    <p>{{obj.Description}}</p>
 
-<h2>Output Format</h2>
+    <h2>Input</h2>
+    <p>{{obj.Input}}</p>
 
-<p>一个数A+B。</p>
+    <h2>Output</h2>
+    <p>{{obj.Output}}</p>
 
-<h2>Sample Input</h2>
+    <h2>Sample Input</h2>
+    <p>{{obj['Sample Input']}}</p>
 
-<pre><code>3 2
-</code></pre>
+    <h2>Sample Output</h2>
+    <p>{{obj['Sample Output']}}</p>
 
-<h2>Sample Output</h2>
-
-<pre><code>5
-</code></pre>
-</article>
+    <h2 v-if="seen">Hint</h2>
+    <p v-if="seen">{{obj.Hint}}</p>
+  </div>
   <aside class="span3">
     <div class="well">
-      <a class="btn btn-primary btn-large" href="./submit.html">提交此题</a>
+      <a href="./submit.html" class="button">提交此题</a>
     </div>
   </aside>
-</div>
-<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<div id="push"></div>
-</div> <!-- /container -->
-</div><!--wrap-->
+
+  <script type="text/javascript">
+    new Vue({
+      el: '#problem',
+      data: {
+        obj,
+        msg: "hello",
+        seen: obj.Hint
+      }
+    })
+    new Vue({
+      el:'#title',
+      data:{
+        obj
+      }
+    })
+    console.log(obj.OJ + "123");
+  </script>
 </body>
+<script type="text/javascript">
+    var order = new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          activeIndex2: '1'
+        }
+      }
+    });
+</script>
+<style>
+  body {
+    padding-top: 0px;
+    padding-left: 0px;
+    background-image: url(./round.png);
+  }
+
+  p {
+    padding-left: 30px;
+  }
+</style>
+
 </html>

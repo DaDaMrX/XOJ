@@ -1,0 +1,12 @@
+{
+"OJ":"POJ",
+"ID":"1000",
+"Title":"A+B Problem",
+"Description":"Calculate a+b",
+"Input":"Two integer a,b (0<=a,b<=10)",
+"Output":"Output a+b",
+"Sample Input":"1 2",
+"Sample Output":"3",
+"Hint": 0,
+"说明":"如果该题没有Hint描述，则置为默认值0"
+}

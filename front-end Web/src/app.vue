@@ -6,7 +6,7 @@
     <p align="left">
        &emsp; &emsp;XOJ是一个针对OJ网站的“作弊”平台，利用爬虫技术，将用户所提交申请的OJ平台网页上题目相关信息记录下来，然后在互联网上搜取相关代码并进行评测，最后返回评测通过的代码，从而帮助用户解决一些棘手的编程题目。同时，XOJ可以对用户的提交及评测结果历史进行记录和分析，让用户对自己的学习情况有更全面的了解。
     </p>
-    <h2><a href="./src/pages/list/list.html" target="_blank">进入系统</a></h2>
+    <h2><a href="./list.html" target="_blank">进入系统</a></h2>
     <hr>
     <p align="center" style="font-family:Arial, Helvetica, sana-serif">
       "All Rights Reserved 2017 XOJ Developer Team"
