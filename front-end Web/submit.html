@@ -40,11 +40,12 @@
       </el-select>
     </center>
     <center>
-      <textarea style="width:500px;height:500px;"></textarea>
-      <div id="foot">
-        <el-button type=submit>提交</el-button>
+      <textarea id="code" style="width:500px;height:500px;"></textarea>
+      <div>
+        <el-button type=submit @click.native="submit">提交</el-button>
+      </div>
     </center>
-    </div>
+  </div>
 </body>
 
 <!-- 先引入 Vue -->
@@ -65,6 +66,29 @@
         "oj": oj,
         "title": title,
         value: ''
+      }
+    },
+    methods: {
+      submit() {
+        var code = document.getElementById("code").value;
+        console.log(code);
+        var xmlhttp;
+        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp = new XMLHttpRequest();
+        }
+        else {// code for IE6, IE5
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            //document.getElementById("test").innerHTML=responseText;
+            //obj = JSON.parse(xmlhttp.responseText);
+            //console.log(obj.list[1].OJ);
+            window.location.href = "./status.html"
+          }
+        }
+        xmlhttp.open("POST", "./status.html?oj="+oj+"&pid="+id, true);
+        xmlhttp.send(code);
       }
     }
   }),

@@ -65,7 +65,7 @@
                     <h2>Status</h2>
                 </div>
                 <div id="table">
-                    <el-table :data="statusData" border style="width: 100%">
+                    <el-table :data="statusData" border style="width: 100%" @cell-click="click">
                         <el-table-column prop="OJ" label="OJ" width="150">
                         </el-table-column>
                         <el-table-column prop="ID" label="ID" width="100">
@@ -108,6 +108,58 @@
         el: '#table',
         data: function () {
             return obj
+        },
+        methods: {
+            click(row, column, cell, event) {
+                var pre_text = cell.innerHTML;
+                var txt = pre_text.substring(18, pre_text.length - 6);
+                var id = row.ID;
+                var title = row.title;
+                var oj = row.OJ;
+                if (txt === oj) {
+                    //如果点击了OJ列，跳转至对应的OJ首页
+                    var oj_list = {
+                        "POJ": "http://poj.org/",
+                        "HDU": "http://acm.hdu.edu.cn/"
+                    }
+                    switch (oj) {
+                        case "POJ": {
+                            window.location.href = oj_list.POJ;
+                            break;
+                        }
+                        case "HDU": {
+                            window.location.href = oj_list.HDU;
+                            break;
+                        }
+                    }
+
+                } else {
+                    //如果点击了Title或者ID列，跳转进入problem.html
+                    //turn(oj, id);
+                    var xmlhttp;
+                    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    }
+                    else {// code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function () {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                            //document.getElementById("test").innerHTML=responseText;
+                            //obj = JSON.parse(xmlhttp.responseText);
+                            //console.log(obj.list[1].OJ);
+                            window.location.href = './problem.html';
+                            console.log(oj + " " + id + " " + row.Title);
+                        }
+                    }
+                    xmlhttp.open("GET", "./problem.html?oj="+oj+"&pid="+id, true);
+                    xmlhttp.send();
+                }
+                console.log(oj + " " + id + " " + row.Title);
+                //console.log(txt);
+                //console.log(row.ID);
+                //console.log(column.label);
+            }
         }
     })
 </script>
