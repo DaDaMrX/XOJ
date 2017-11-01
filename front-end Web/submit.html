@@ -1,17 +1,22 @@
 <html>
+<script>
+  var oj = localStorage.oj;
+  var id = localStorage.id;
+  var title = localStorage.title;
+</script>
 
 <head>
-  <title>
-    a+b-poj-1001
+  <title id="ti">
+    {{title+"-"+oj+"-"+id}}
   </title>
+  <!--<link rel="stylesheet" href="./xoj.css" type="text/css">-->
   <link rel="icon" href="logo.ico" type="logo-icon" />
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
 </head>
 
 <body>
   <div id="app">
-    <el-menu :default-active="activeIndex2" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64"
-      text-color="#fff" active-text-color="#ffd04b">
+    <el-menu class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
       <el-menu-item index="3">
         <a href="./lisit.html" target="_blank">HOME</a>
       </el-menu-item>
@@ -27,17 +32,18 @@
     </el-menu>
 
     <center>
-      <h3>Language:</h3>
-      <el-select v-model="value" size="small" placeholder="请选择">
-        <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+      <h2>{{oj+" "+id+"."+title}}</h2>
+      <h3>Compiler:</h3>
+      <el-select size="small" placeholder="g++">
+        <el-option v-for="item in options" :key="item.value" :label="item.label">
         </el-option>
       </el-select>
     </center>
     <center>
       <textarea style="width:500px;height:500px;"></textarea>
       <div id="foot">
-        <el-button click="./status.html">提交</el-button>
-    </center>-->
+        <el-button type=submit>提交</el-button>
+    </center>
     </div>
 </body>
 
@@ -51,10 +57,25 @@
     el: '#app',
     data: function () {
       return {
-        activeIndex2: '1'
+        options: [{
+          value: 'option 1',
+          label: 'g++'
+        }],
+        "id": id,
+        "oj": oj,
+        "title": title,
+        value: ''
       }
     }
-  })
+  }),
+    new Vue({
+      el: '#ti',
+      data: {
+        "id": id,
+        "oj": oj,
+        "title": title,
+      }
+    })
 </script>
 
 </html>

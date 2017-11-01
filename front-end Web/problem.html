@@ -16,6 +16,9 @@
         //document.getElementById("test").innerHTML=responseText;
         obj = JSON.parse(xmlhttp.responseText);
         console.log(obj.OJ);
+        localStorage.setItem("id",obj.ID);
+        localStorage.setItem("oj",obj.OJ);
+        localStorage.setItem("title",obj.Title);
       }
     }
     xmlhttp.open("GET", "./problem.json", true);
@@ -59,7 +62,7 @@
     </el-menu>
   </div>
   <div id="problem">
-   <h1>{{obj.OJ+" "+obj.ID+"."+obj.Title}}</h1>
+    <h1>{{obj.OJ+" "+obj.ID+"."+obj.Title}}</h1>
 
     <h2>Description</h2>
     <p>{{obj.Description}}</p>
@@ -95,8 +98,8 @@
       }
     })
     new Vue({
-      el:'#title',
-      data:{
+      el: '#title',
+      data: {
         obj
       }
     })

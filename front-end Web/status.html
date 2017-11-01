@@ -1,56 +1,41 @@
 <html>
+<script type="text/javascript">
+    var obj = {};
+    function init() {
+        //console.log("a");
+        var xmlhttp;
+        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                //document.getElementById("test").innerHTML=responseText;
+                obj = JSON.parse(xmlhttp.responseText);
+                //console.log(obj.statusData[1].OJ);
+            }
+        }
+        xmlhttp.open("GET", "./status.json", true);
+        xmlhttp.send();
+    }
+    window.onload = init();
+  //console.log(obj.Title);
+  //console.log(obj.OJ + "123");
+</script>
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>评测状态-XOJ</title>
     <!--<link rel="stylesheet" href="./xoj.css" type="text/css">-->
     <link rel="icon" href="logo.ico" type="logo-icon" />
+    <!-- 引入element样式 -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <style>
-        .toprow {
-            background-color: #dddddd;
-            color: #181717;
-            font-weight: bold;
-            font-size: 15px;
-            font-family: "Times New Roman", Georgia, Serif;
-            white-space: nowrap;
-        }
-
-        .toprow a {
-            color: #FFFFFF;
-            font-family: Arial;
-            font-size: 50px;
-            font-weight: bold;
-            margin: 15px;
-        }
-
-        .toprow a:hover {
-            color: orange;
-            font-family: Arial;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 15px;
-        }
-
-
-        table th {
-            border-left: #FFFFFF 3px solid;
-        }
-
-        .evenrow2 td {
-            border-left: #FFFFFF 3px solid;
-            font-size: 1em;
-            white-space: nowrap;
-            font-family: "Times New Roman", Georgia, Serif;
-
-        }
-
-        .oddrow2 td {
-            border-left: #FFFFFF 3px solid;
-            font-size: 1em;
-            background-color: #DCDCDC;
-            white-space: nowrap;
-            font-family: "Times New Roman", Georgia, Serif;
+        div {
+            border-radius: 5px 5px 0 0;
         }
     </style>
 </head>
@@ -62,7 +47,7 @@
             <el-menu-item index="1">
                 <a href="./lisit.html" target="_blank">HOME</a>
             </el-menu-item>
-            <el-menu-item index="1">
+            <el-menu-item index="2">
                 <a href="./submit.html" target="_blank">SUBMIT</a>
             </el-menu-item>
             <el-menu-item index="3">
@@ -73,170 +58,38 @@
             </el-menu-item>
         </el-menu>
     </div>
-  <div id="main">
+    <div id="main">
         <div class="rich_text round_0123">
             <center>
                 <div class="center">
                     <h2>Status</h2>
                 </div>
-            </center>
-            <table width="100%">
-                <thead>
-                    <tr class="toprow">
-                        <th width="5%">OJ</th>
-                        <th width="5%">ID</th>
-                        <th width="35%">Description</th>
-                        <th width="15%">Submit time</th>
-                        <th width="5%">code length</th>
-                        <th width="5%">Run time</th>
-                        <th width="5%">status</th>
-
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr class="evenrow2">
-                        <td>
-                            <div class="center">POJ</div>
-                        </td>
-                        <td>
-                            <div class="left">
-                                <a href="./problem.html">1000</a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="center">
-                                <a href="./problem.html">a+b</a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="center">xx:xx:xx</div>
-                        </td>
-                        <td>
-                            <div class="center">
-                                <span class="red">##</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="center">
-                                <span class="green">xx:xx:xx</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="center">
-                                <span class="red">running</span>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="oddrow2">
-                        <td>
-                            <div class="center">HDU</div>
-                        </td>
-                        <td>
-                            <div class="left">
-                                <a href="#">1001</a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="center">
-                                <a href="#">大小写字母转换</a>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="center">xx:xx:xx</div>
-                        </td>
-                        <td>
-                            <div class="center">
-                                <span class="red">##</span>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="center">
-                                <span class="green">xx:xx:xx</span>
-                            </div>
-                        </td>
-
-                        <td>
-                            <div class="center">
-                                <span class="red">AC</span>
-                            </div>
-                        </td>
-                        <tr class="evenrow2">
-                            <td>
-                                <div class="center">W</div>
-                            </td>
-                            <td>
-                                <div class="left">... </div>
-                            </td>
-                            <td>
-                                <div class="center">... </div>
-                            </td>
-                            <td>
-                                <div class="center"> ...</div>
-                            </td>
-                            <td>
-                                <div class="center">
-                                    <span class="red"> ... </span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="center">
-                                    <span class="green">... </span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="center">
-                                    <span class="red">... </span>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="oddrow2">
-                            <td>
-                                <div class="center"> </div>
-                            </td>
-                            <td>
-                                <div class="left">
-                                    </a>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="center"> </div>
-                            </td>
-                            <td>
-                                <div class="center"> </div>
-                            </td>
-                            <td>
-                                <div class="center">
-                                    <span class="red"> </span>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="center">
-                                    <span class="red"> </span>
-                                </div>
-                            </td>
-
-                            <td>
-                                <div class="center">
-                                    <span class="red"> </span>
-                                </div>
-                            </td>
-                </tbody>
-
-            </table>
-
-
+                <div id="table">
+                    <el-table :data="statusData" border style="width: 100%">
+                        <el-table-column prop="OJ" label="OJ" width="150">
+                        </el-table-column>
+                        <el-table-column prop="ID" label="ID" width="100">
+                        </el-table-column>
+                        <el-table-column prop="Title" label="Title" width="200">
+                        </el-table-column>
+                        <el-table-column prop="Submit time" label="Submit time" width="200">
+                        </el-table-column>
+                        <el-table-column prop="length" label="length" width="200">
+                        </el-table-column>
+                        <el-table-column prop="Run time" label="Run time" width="200">
+                        </el-table-column>
+                        <el-table-column prop="Status" label="Status" width="298">
+                        </el-table-column>
+                    </el-table>
+                </div>
         </div>
     </div>
-
 </body>
 
 
-<!-- 先引入 Vue -->
+<!-- 引入vue -->
 <script src="https://unpkg.com/vue/dist/vue.js"></script>
-<!-- 引入组件库 -->
+<!-- 引入element JS -->
 <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 
 <script>
@@ -244,10 +97,18 @@
         el: '#app',
         data: function () {
             return {
-                activeIndex: ''
+                activeIndex: '4'
             };
         }
+    })
+</script>
 
+<script>
+    new Vue({
+        el: '#table',
+        data: function () {
+            return obj
+        }
     })
 </script>
 
