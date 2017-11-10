@@ -1,0 +1,192 @@
+<html>
+<script>
+    var oj = localStorage.oj;
+    var id = localStorage.id;
+    var title = localStorage.title;
+</script>
+<script type="text/javascript">
+    var obj = {
+        "statusdata": [{
+        }]
+    };
+    var recv = {};
+    function init() {
+        console.log("a");
+        var xmlhttp;
+        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        }
+        else {// code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                recv = JSON.parse(xmlhttp.responseText);
+                obj.statusdata.unshift(recv);
+                obj.statusdata.pop();
+            }
+        }
+        xmlhttp.open("GET", "/statusdata?oj=" + oj + "&pid=" + id, false);
+        xmlhttp.send();
+    }
+    init();
+    while (recv.status == "Queuing" || recv.status == "Running" || recv.status == "Compiling") {
+        init();
+    }
+</script>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>评测状态-XOJ</title>
+    <link rel="icon" href="logo.ico" type="logo-icon" />
+    <link rel="stylesheet" href="/ref/index.css">
+    <script src="/ref/index.js"></script>
+    <style>
+        div {
+            border-radius: 5px 5px 0 0;
+        }
+    </style>
+</head>
+
+<body background="round.png">
+    <div id="app">
+        <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff"
+            active-text-color="#ffd04b">
+            <el-menu-item index="0">
+                <a href="/index.html">主页</a>
+            </el-menu-item>
+            <el-menu-item index="1">
+                <a href="/list.html">题目列表</a>
+            </el-menu-item>
+            <el-menu-item index="2">
+                <a href="/problem.html?oj=HDU&pid=1000">问题详情</a>
+            </el-menu-item>
+            <el-menu-item index="3">
+                <a href="/submit.html">提交代码</a>
+            </el-menu-item>
+            <el-menu-item index="4">
+                <a href="/status.html">评测状态</a>
+            </el-menu-item>
+            <el-menu-item index="5">
+                <a href="/autostatus.html">自动提交状态</a>
+            </el-menu-item>
+        </el-menu>
+    </div>
+    <div id="main">
+        <div class="rich_text round_0123">
+            <center>
+                <div class="center">
+                    <h2>评测状态</h2>
+                </div>
+                <div id="table">
+                    <el-table :data="statusdata" border style="width: 100%" @cell-click="click">
+                        <el-table-column prop="oj" label="OJ" width="150">
+                        </el-table-column>
+                        <el-table-column prop="pid" label="ID" width="100">
+                        </el-table-column>
+                        <el-table-column prop="title" label="Title" width="200">
+                        </el-table-column>
+                        <el-table-column prop="status" label="Status" width="298">
+                        </el-table-column>
+                    </el-table>
+                </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="push"></div>
+    </div>
+    <div class="footer">
+        <hr>
+        <p align="center" style="font-family:Arial, Helvetica, sana-serif">
+            "All Rights Reserved 2017 XOJ Developer Team"
+        </p>
+    </div>
+</body>
+
+
+<script src="/ref/vue.js"></script>
+<script src="/ref/index.js"></script>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: function () {
+            return {
+                activeIndex: '4'
+            };
+        }
+    })
+</script>
+<script>
+    new Vue({
+        el: '#table',
+        data: function () {
+            return obj
+        },
+        methods: {
+            click(row, column, cell, event) {
+                var pre_text = cell.innerHTML;
+                var txt = pre_text.substring(18, pre_text.length - 6);
+                var id = row.ID;
+                var title = row.title;
+                var oj = row.OJ;
+                if (txt === oj) {
+                    //如果点击了OJ列，跳转至对应的OJ首页
+                    var oj_list = {
+                        "POJ": "http://poj.org/",
+                        "HDU": "http://acm.hdu.edu.cn/"
+                    }
+                    switch (oj) {
+                        case "POJ": {
+                            window.open(oj_list.POJ);
+                            break;
+                        }
+                        case "HDU": {
+                            window.open(oj_list.HDU);
+                            break;
+                        }
+                    }
+
+                } else {
+                    //如果点击了Title或者ID列，跳转进入problem.html
+                    var xmlhttp;
+                    if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp = new XMLHttpRequest();
+                    }
+                    else {// code for IE6, IE5
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                    }
+                    xmlhttp.onreadystatechange = function () {
+                        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                            window.location.href = "/problem.html?oj=" + oj + "&pid=" + id;
+                        }
+                    }
+                    xmlhttp.open("GET", "/problem.html?oj=" + oj + "&pid=" + id, true);
+                    xmlhttp.send();
+                }
+            }
+        }
+    })
+</script>
+<style>
+    html,
+    body {
+        background-image: url(/ref/round.png);
+        margin: 0;
+        padding-left: 5%;
+        padding-right: 5%;
+        height: 100%;
+    }
+
+    .wrapper {
+        min-height: 15%;
+        margin-bottom: -1px;
+    }
+
+    .footer,
+    .push {
+        height: 1px;
+    }
+</style>
+
+</html>

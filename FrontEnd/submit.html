@@ -1,0 +1,147 @@
+<html>
+<script>
+  var oj = localStorage.oj;
+  var id = localStorage.id;
+  var title = localStorage.title;
+</script>
+
+<head>
+  <title id="ti">
+    {{title+"-"+oj+"-"+id}}
+  </title>
+  <link rel="icon" href="/ref/logo.ico" type="logo-icon" />
+  <link rel="stylesheet" href="/ref/index.css">
+</head>
+
+<body>
+  <div id="app">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff"
+      active-text-color="#ffd04b">
+      <el-menu-item index="0">
+        <a href="/index.html">主页</a>
+      </el-menu-item>
+      <el-menu-item index="1">
+        <a href="/list.html">题目列表</a>
+      </el-menu-item>
+      <el-menu-item index="2">
+        <a href="/problem.html?oj=HDU&pid=1000">问题详情</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="/submit.html">提交代码</a>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <a href="/status.html">评测状态</a>
+      </el-menu-item>
+      <el-menu-item index="5">
+        <a href="/autostatus.html">自动提交状态</a>
+      </el-menu-item>
+    </el-menu>
+
+    <center>
+      <h2>{{oj+" "+id+"."+title}}</h2>
+      <el-select size="small" placeholder="g++">
+        <el-option v-for="item in options" :key="item.value" :label="item.label">
+        </el-option>
+      </el-select>
+    </center>
+    <br>
+    <center>
+      <textarea id="code" style="width:500px;height:400px;"></textarea>
+      <br>
+      <br>
+      <div>
+        <el-button type="primary" @click.native="submit">提交</el-button>
+      </div>
+    </center>
+  </div>
+  <div class="wrapper">
+    <div class="push"></div>
+  </div>
+  <div class="footer">
+    <hr>
+    <p align="center" style="font-family:Arial, Helvetica, sana-serif">
+      "All Rights Reserved 2017 XOJ Developer Team"
+    </p>
+  </div>
+</body>
+
+<script src="/ref/vue.js"></script>
+<script src="/ref/index.js"></script>
+
+<script>
+  new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        options: [{
+          value: 'option 1',
+          label: 'g++'
+        }],
+        "id": id,
+        "oj": oj,
+        "title": title,
+        "activeIndex": '3'
+      }
+    },
+    methods: {
+      submit() {
+        var code = document.getElementById("code").value;
+        var xmlhttp;
+        var code_obj = {
+          "oj": oj,
+          "pid": id,
+          "code": code,
+          "lang": "G++"
+        }
+        if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
+          xmlhttp = new XMLHttpRequest();
+        }
+        else {// code for IE6, IE5
+          xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+          if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            if(xmlhttp.responseText=='0'){
+              alert("代码长度过短！");
+            }else{
+              window.location.href = "/status.html"
+            }
+          }
+        }
+        xmlhttp.open("POST", "/status", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+        xmlhttp.setRequestHeader("submitdata", JSON.stringify(code_obj))
+        xmlhttp.send()
+      }
+    }
+  }),
+    new Vue({
+      el: '#ti',
+      data: {
+        "id": id,
+        "oj": oj,
+        "title": title,
+      }
+    })
+</script>
+<style>
+  html,
+  body {
+    background-image: url(/ref/round.png);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  .wrapper {
+    min-height: 15%;
+    margin-bottom: -1px;
+  }
+
+  .footer,
+  .push {
+    height: 1px;
+  }
+</style>
+
+</html>
