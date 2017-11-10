@@ -18,13 +18,18 @@ def search(onlinejudge, problem, index = 0):
 	soup = BeautifulSoup(html, 'lxml')
 	code_list = soup.find_all('pre', class_ = ['cpp', 'prettyprint'])
 	
-	result = ''
+	code = ''
 	for code_item in code_list:
-		code = code_item.get_text()
-		if len(code) > len(result):
-			result = code
-	return result
+		test_code = code_item.get_text()
+		if len(test_code) > len(code):
+			code = test_code
+	
+	data = {
+		'url': url,
+		'code': code
+	}
+	return data
 
 if __name__ == '__main__':
-	code = search('POJ', '1000')
+	code = search('HDU', '1000')
 	print(code)
