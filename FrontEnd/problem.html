@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="icon" href="logo.ico" type="logo-icon" />
+  <link rel="stylesheet" href="/ref/index.css">
+  <script src="/ref/vue.js"></script>
+  <script src="/ref/index.js"></script>
+</head>
+
+<body>
+  <div id="title">
+    <title>{{oj+" "+pid+" - "+title}} | XOJ</title>
+  </div>
+  <div id="app">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" background-color="#545c64" text-color="#fff"
+      active-text-color="#ffd04b">
+      <el-menu-item index="0">
+        <a href="/index.html">主页</a>
+      </el-menu-item>
+      <el-menu-item index="1">
+        <a href="/list.html">题目列表</a>
+      </el-menu-item>
+      <el-menu-item index="2">
+        <a href="/problem.html?oj=HDU&pid=1000">问题详情</a>
+      </el-menu-item>
+      <el-menu-item index="3">
+        <a href="/submit.html">提交代码</a>
+      </el-menu-item>
+      <el-menu-item index="4">
+        <a href="/status.html">评测状态</a>
+      </el-menu-item>
+      <el-menu-item index="5">
+        <a href="/autostatus.html">自动提交状态</a>
+      </el-menu-item>
+    </el-menu>
+  </div>
+  <div id="problem">
+    <h1>{{oj+" "+pid+" - "+title}}</h1>
+    <h2>Description</h2>
+    <p>{{desc}}</p>
+
+    <h2>Input</h2>
+    <p>{{input}}</p>
+
+    <h2>Output</h2>
+    <p>{{output}}</p>
+
+    <h2>Sample Input</h2>
+    <p>{{sample_input}}</p>
+
+    <h2>Sample Output</h2>
+    <p>{{sample_output}}</p>
+    <el-button type="primary" @click.native="submit">提交此题</el-button>
+  </div>
+
+  <div class="wrapper">
+    <div class="push"></div>
+  </div>
+  <div class="footer">
+    <hr>
+    <p align="center" style="font-family:Arial, Helvetica, sana-serif">
+      "All Rights Reserved 2017 XOJ Developer Team"
+    </p>
+  </div>
+</body>
+<script type="text/javascript">
+  var order = new Vue({
+    el: '#app',
+    data: function () {
+      return {
+        activeIndex: '2'
+      }
+    }
+  });
+  var order = new Vue({
+    el: '#problem',
+    methods: {
+      submit() {
+        window.location.href = "/submit.html";
+      }
+    }
+  });
+</script>
+<style>
+  body {
+    padding-left: 5%;
+    padding-right: 5%;
+    margin: 0;
+    background-image: url(/ref/round.png);
+  }
+
+  .wrapper {
+    min-height: 15%;
+    margin-bottom: -1px;
+  }
+
+  .footer,
+  .push {
+    height: 1px;
+  }
+
+  /* p {
+    padding-left: 10%;
+  }
+
+  h1,h2 {
+    padding-left: 10%;
+  } */
+</style>
+
+</html>
